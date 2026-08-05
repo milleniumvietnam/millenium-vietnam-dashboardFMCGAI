@@ -1,0 +1,15 @@
+# Sensitive credentials & environment variables
+.env
+*.env
+server/.env
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build & OS files
+.DS_Store
+.firebase/
+*.log
+database.db
+server/database.db

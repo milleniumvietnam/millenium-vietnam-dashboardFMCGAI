@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  millennium-app:
+    build: .
+    container_name: millennium_ai_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - N8N_API_URL=http://n8n:5678
+      - N8N_API_KEY=${N8N_API_KEY}
+    env_file:
+      - ./server/.env
+    depends_on:
+      - n8n
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: millennium_n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=millennium_ai_pass
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:

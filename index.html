@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Millenium Việt Nam — Bảng Điều Hành Chuyên Nghiệp (Executive OS v2.0)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Chart.js for executive analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css?v=2.0.2">
+</head>
+<body>
+    <div id="app-root">
+
+        <!-- TOP HEADER GLASS -->
+        <header class="top-header">
+            <div class="brand-container">
+                <img src="assets/logo.jpg" alt="Millenium Logo" class="brand-logo-img" onerror="this.src='https://ui-avatars.com/api/?name=Millenium+VN&background=4A2C6F&color=fff'">
+                <div class="brand-text">
+                    <div class="brand-title">MILLENIUM VIỆT NAM</div>
+                    <div class="brand-subtitle">Thánh Gióng — Phù Đổng Thiên Vương 2.0 · Cập nhật 05/08/2026</div>
+                </div>
+            </div>
+
+            <!-- SYSTEM TOOLS STATUS PILLS -->
+            <div class="system-status-pills">
+                <div class="status-pill active-zalo" title="Trợ lý Lễ Tân Zalo 03.5555.4250 / Telegram @Socola_tim_sieucaocap_bot">
+                    <span class="pulse-dot"></span>
+                    <span>Lễ Tân AI (Zalo/Tele): <strong>Online 24/7</strong></span>
+                </div>
+                <div class="status-pill active-scanner" title="Máy rà soát quảng cáo milleniumts.cloud/form/ra-soat">
+                    <i class="ri-shield-flash-line"></i>
+                    <span>Máy Rà Soát QC: <strong>Sẵn sàng (40s)</strong></span>
+                </div>
+                <div class="status-pill" title="07-bang-cham-diem-50-muc-tieu.csv">
+                    <i class="ri-table-line"></i>
+                    <span>50 Mục Tiêu: <strong id="header-target-count">50 Brand</strong></span>
+                </div>
+            </div>
+
+            <!-- HEADER CONTROLS -->
+            <div class="header-controls">
+                <button class="btn-header accent-lam" onclick="switchTab('scanner')" title="Mở máy rà soát QC 40 giây cho Việc B">
+                    <i class="ri-scan-2-line"></i> Rà Soát QC 40s
+                </button>
+                <button class="btn-header primary-tim" onclick="triggerAutoApprovalAll()" title="Phê duyệt tự động 100% nhiệm vụ AI">
+                    <i class="ri-checkbox-circle-line"></i> Tự Động Duyệt 100%
+                </button>
+
+                <!-- Device View Toggle -->
+                <button class="btn-header" id="btn-device-toggle" onclick="toggleDeviceView()" title="Chuyển đổi giao diện Desktop / Mobile">
+                    <i class="ri-smartphone-line"></i> <span id="device-view-text">Desktop</span>
+                </button>
+
+                <!-- Theme Light/Dark Toggle -->
+                <button class="theme-toggle-btn" id="btn-theme-toggle" onclick="toggleTheme()" title="Chuyển đổi giao diện Tối / Sáng">
+                    <i class="ri-moon-line" id="theme-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- NAVIGATION TAB BAR -->
+        <nav class="nav-tab-bar">
+            <button class="nav-tab-item active" data-tab="overview" onclick="switchTab('overview')">
+                <i class="ri-dashboard-3-line"></i> <span>01. Tổng Quan</span>
+            </button>
+            <button class="nav-tab-item" data-tab="viec-a" onclick="switchTab('viec-a')">
+                <i class="ri-cup-line"></i> <span>02. Việc A: Socola Pháp Lam</span>
+            </button>
+            <button class="nav-tab-item tab-viec-b" data-tab="viec-b" onclick="switchTab('viec-b')">
+                <i class="ri-robot-line"></i> <span>03. Việc B: Dịch Vụ AI (50 Mục Tiêu)</span>
+            </button>
+            <button class="nav-tab-item tab-viec-b" data-tab="scanner" onclick="switchTab('scanner')">
+                <i class="ri-search-eye-line"></i> <span>04. Máy Rà Soát QC (40s)</span>
+            </button>
+            <button class="nav-tab-item" data-tab="sop" onclick="switchTab('sop')">
+                <i class="ri-git-commit-line"></i> <span>05. Quy Trình SOP & AI Agents</span>
+            </button>
+            <button class="nav-tab-item" data-tab="compliance" onclick="switchTab('compliance')">
+                <i class="ri-shield-cross-line"></i> <span>06. Bộ Quy Tắc & 5 Từ Cấm</span>
+            </button>
+            <button class="nav-tab-item" data-tab="logs" onclick="switchTab('logs')">
+                <i class="ri-terminal-window-line"></i> <span>07. Nhật Ký & MEI Copilot</span>
+            </button>
+        </nav>
+
+        <!-- MAIN VIEWPORT WRAPPER -->
+        <div class="viewport-wrapper" id="viewport-wrapper">
+            <main class="app-container">
+
+                <!-- ============================================================ -->
+                <!-- TAB 1: TỔNG QUAN ĐIỀU HÀNH BENTO GRID -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel active" id="panel-overview">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 01</span>
+                        <h2>Hai Nhánh Vận Hành Doanh Nghiệp</h2>
+                        <p class="dan" style="color:var(--muc-nhat)">Nhầm hai việc này với nhau là nhầm mọi thứ phía sau. Hệ thống AI phục vụ cả hai, nhưng theo hai cách hoàn toàn khác nhau.</p>
+                    </div>
+
+                    <!-- BENTO GRID ARCHITECTURE -->
+                    <div class="bento-grid-overview">
+                        <!-- BENTO 1: VIỆC A CARD (6 COLS) -->
+                        <div class="bento-card bento-col-6 nhanh-card tilt-card">
+                            <div class="card-head">
+                                <span class="chip-tag">Việc A · Tím Việt</span>
+                                <span class="nhan" style="color:var(--tim)">Launch Cuối 2026</span>
+                            </div>
+                            <h3 class="ten-viec">Bán Socola Pháp Lam</h3>
+                            <div class="slogan-box">
+                                “Nguyên sắc tím Việt”
+                                <span>Sắc tím thật của hạt cacao, trong men Pháp Lam Cung Đình Huế</span>
+                            </div>
+                            <dl class="info-dl">
+                                <dt>Bán gì</dt>
+                                <dd>Hộp socola cao cấp chế tác nghệ thuật Pháp Lam Cung Đình Huế (<strong>888.000đ – 68.000.000đ</strong>)</dd>
+                                <dt>Khách hàng</dt>
+                                <dd>Quà ngoại giao, kiều bào, khách quốc tế, nhà sưu tầm socola</dd>
+                                <dt>Công cụ</dt>
+                                <dd>Trợ lý Lễ Tân 24/7 (Zalo 03.5555.4250 & Telegram @Socola_tim_sieucaocap_bot)</dd>
+                            </dl>
+                        </div>
+
+                        <!-- BENTO 2: VIỆC B CARD (6 COLS) -->
+                        <div class="bento-card bento-col-6 nhanh-card nhanh-b tilt-card">
+                            <div class="card-head">
+                                <span class="chip-tag">Việc B · Dịch vụ AI</span>
+                                <span class="nhan" style="color:var(--lam)">Có tiền ngay bây giờ</span>
+                            </div>
+                            <h3 class="ten-viec">Bán Dịch Vụ Trợ Lý AI</h3>
+                            <div class="slogan-box" style="color:var(--lam); background:var(--lam-nen); border-left-color:var(--lam)">
+                                “Nuôi công ty & Bằng chứng thực tế”
+                                <span>Dựng trợ lý AI cho yến sào, trà cổ thụ, quà Tết, dược liệu cao cấp</span>
+                            </div>
+                            <dl class="info-dl">
+                                <dt>Bán gì</dt>
+                                <dd>Hợp đồng dựng Trợ Lý AI chuyên nghiệp (<strong>6 đến 180 triệuđ / hợp đồng</strong>)</dd>
+                                <dt>Khách hàng</dt>
+                                <dd>Chủ các thương hiệu thực phẩm cao cấp (chính chủ trả lời tin nhắn)</dd>
+                                <dt>Công cụ</dt>
+                                <dd>Máy rà soát QC (milleniumts.cloud/form/ra-soat) + Bảng 50 mục tiêu</dd>
+                            </dl>
+                        </div>
+
+                        <!-- BENTO 3: STRATEGIC CALLOUT BOX (12 COLS) -->
+                        <div class="bento-col-12 chot-box">
+                            <strong>Mối quan hệ cốt lõi giữa hai việc:</strong> Việc B nuôi công ty trong lúc chờ Việc A ra mắt. Đồng thời Socola Pháp Lam chính là <em>bằng chứng sống</em> để bán Việc B — khi khách hỏi <em>“bên em đã làm cho ai chưa?”</em>, ta trả lời <em>“bên em làm cho chính sản phẩm của mình trước.”</em> Vì vậy Việc A phải chạy tốt thì Việc B mới bán được.
+                        </div>
+
+                        <!-- BENTO 4: STAT CARDS BENTO (12 COLS) -->
+                        <div class="bento-col-12 stat-cards-bento">
+                            <div class="stat-card-item tilt-card">
+                                <span class="nhan">Pipeline Việc B (Doanh thu)</span>
+                                <span class="stat-val lam-val" id="stat-revenue-b" data-target="840000000">840.000.000đ</span>
+                                <span style="font-size:12.5px; color:var(--muc-nhat)">12 Hợp đồng tiềm năng</span>
+                            </div>
+                            <div class="stat-card-item tilt-card">
+                                <span class="nhan">Cảnh báo Khách Tổ Chức (Việc A)</span>
+                                <span class="stat-val tim-val" id="stat-b2b-alerts" data-target="8">8 Khách VIP</span>
+                                <span style="font-size:12.5px; color:var(--muc-nhat)">Chờ tiếp quản trong 2h</span>
+                            </div>
+                            <div class="stat-card-item tilt-card">
+                                <span class="nhan">Bản Rà Soát QC Đã Gửi</span>
+                                <span class="stat-val dong-val" id="stat-scans-count" data-target="34">34 Thương hiệu</span>
+                                <span style="font-size:12.5px; color:var(--muc-nhat)">Tỷ lệ mở cửa 68%</span>
+                            </div>
+                            <div class="stat-card-item tilt-card">
+                                <span class="nhan">Phiên Zalo Session</span>
+                                <span class="stat-val luc-val">100% Hoạt động</span>
+                                <span style="font-size:12.5px; color:var(--muc-nhat)">Zalo 03.5555.4250 An toàn</span>
+                            </div>
+                        </div>
+
+                        <!-- BENTO 5 & 6: CHARTS BENTO (6 COLS EACH) -->
+                        <div class="bento-card bento-col-6 tilt-card">
+                            <h3>Phân Bổ Pipeline Doanh Thu (Việc A vs Việc B)</h3>
+                            <canvas id="chart-revenue-mix" height="220"></canvas>
+                        </div>
+                        <div class="bento-card bento-col-6 tilt-card">
+                            <h3>Tiến Độ Tiếp Cận Chuỗi 5 Lần Chạm (50 Mục Tiêu)</h3>
+                            <canvas id="chart-outreach-pipeline" height="220"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 2: VIỆC A - SOCOLA PHÁP LAM & LỄ TÂN AI -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-viec-a">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 03 & QT-02</span>
+                        <h2>Việc A: Quản Lý Trợ Lý Lễ Tân & Cảnh Báo Khách B2B</h2>
+                        <p class="dan">Trợ lý Lễ Tân trực Zalo 03.5555.4250 & Telegram @Socola_tim_sieucaocap_bot 24/7. Trả lời câu chuyện sản phẩm, nhận ra khách tổ chức và bắn cảnh báo ngay.</p>
+                    </div>
+
+                    <!-- 5-STEP FLOW DIAGRAM -->
+                    <div class="so-do-container">
+                        <span class="nhan" style="margin-bottom:14px">Sơ đồ tiếp nhận khách nhắn tin (Máy đặc · Người rỗng)</span>
+                        
+                        <div class="buoc-do-item">
+                            <div class="cot-tuyen"><span class="cham-dot"></span><span class="tuyen-line"></span></div>
+                            <div class="noi-do-box">
+                                <span class="ai-tag">Máy AI</span>
+                                <span class="viec-main">1. Khách nhắn vào Zalo 03.5555.4250 hoặc Telegram</span>
+                                <span class="viec-sub">Nhận diện khách hỏi Socola Pháp Lam vs Nước suối Cristaline. Không bao giờ trả lời hai lần.</span>
+                            </div>
+                        </div>
+
+                        <div class="buoc-do-item">
+                            <div class="cot-tuyen"><span class="cham-dot"></span><span class="tuyen-line"></span></div>
+                            <div class="noi-do-box">
+                                <span class="ai-tag">Máy AI</span>
+                                <span class="viec-main">2. Trợ lý Lễ Tân trả lời trong vài giây</span>
+                                <span class="viec-sub">Kể câu chuyện "Nguyên sắc tím Việt", hỏi mua cá nhân hay tổ chức. Nhớ toàn bộ lịch sử trò chuyện.</span>
+                            </div>
+                        </div>
+
+                        <div class="buoc-do-item">
+                            <div class="cot-tuyen"><span class="cham-dot"></span><span class="tuyen-line"></span></div>
+                            <div class="noi-do-box">
+                                <span class="ai-tag">Máy AI</span>
+                                <span class="viec-main">3. Ghi lại vào Sổ nhật ký Google Sheet</span>
+                                <span class="viec-sub">Mỗi cuộc trò chuyện vào 1 dòng, kèm phân loại nhóm khách và mức độ quan tâm.</span>
+                            </div>
+                        </div>
+
+                        <div class="buoc-do-item">
+                            <div class="cot-tuyen"><span class="cham-dot lam-dot"></span><span class="tuyen-line"></span></div>
+                            <div class="noi-do-box">
+                                <span class="ai-tag" style="color:var(--lam)">Máy AI</span>
+                                <span class="viec-main">4. Nếu là Khách Tổ Chức — Bắn cảnh báo về Telegram của người phụ trách</span>
+                                <span class="viec-sub">Ví dụ: Khách nói là cơ quan, cần 200 hộp quà ngoại giao. Bắn đủ thông tin thu thập được.</span>
+                            </div>
+                        </div>
+
+                        <div class="buoc-do-item">
+                            <div class="cot-tuyen"><span class="cham-dot rong-dot"></span></div>
+                            <div class="noi-do-box">
+                                <span class="ai-tag human-tag">Người Thật</span>
+                                <span class="viec-main">5. Người thật vào nói chuyện trực tiếp với khách (SOP QT-02 trong 2h)</span>
+                                <span class="viec-sub">Đây là lúc duy nhất mà giá cả, cam kết, và hợp đồng được đàm phán.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- B2B ALERTS FEED & TAKEOVER QUEUE -->
+                    <div style="display:flex; flex-direction:column; gap:16px">
+                        <div style="display:flex; justify-content:space-between; align-items:center">
+                            <h3><i class="ri-notification-3-line" style="color:var(--tim)"></i> Danh Sách Cảnh Báo Khách Tổ Chức (Cần Người Tiếp Quản SOP QT-02)</h3>
+                            <button class="btn-header" onclick="renderB2BAlerts()"><i class="ri-refresh-line"></i> Làm mới</button>
+                        </div>
+
+                        <div class="cuon-table">
+                            <table class="data-table" id="table-b2b-alerts">
+                                <thead>
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Tên khách / Tổ chức</th>
+                                        <th>Kênh nhắn</th>
+                                        <th>Nhu cầu thu thập được</th>
+                                        <th>Số lượng dự kiến</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 3: VIỆC B - DỊCH VỤ AI & BẢNG 50 MỤC TIÊU (CRM) -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-viec-b">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 02 & QT-01</span>
+                        <h2>Việc B: Quản Lý Bảng 50 Mục Tiêu (Outreach CRM)</h2>
+                        <p class="dan">Danh sách 50 thương hiệu thực phẩm cao cấp tiềm năng (yến sào, trà cổ thụ, quà Tết, dược liệu). Ưu tiên các thương hiệu có điểm từ 8 trở lên.</p>
+                    </div>
+
+                    <!-- CONTROLS & FILTERS -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px">
+                        <div style="display:flex; gap:10px; align-items:center">
+                            <button class="btn-header active" id="filter-score-8" onclick="filterTargets('score-8')">
+                                <i class="ri-star-fill" style="color:var(--dong)"></i> Điểm >= 8 (Ưu tiên cao)
+                            </button>
+                            <button class="btn-header" id="filter-score-all" onclick="filterTargets('all')">
+                                Tất cả 50 thương hiệu
+                            </button>
+                        </div>
+                        <button class="btn-header accent-lam" onclick="openAddTargetModal()">
+                            <i class="ri-add-line"></i> Thêm Thương Hiệu Mới
+                        </button>
+                    </div>
+
+                    <!-- CRM TARGET TABLE -->
+                    <div class="cuon-table">
+                        <table class="data-table" id="table-targets">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Ngành hàng</th>
+                                    <th>Điểm đánh giá</th>
+                                    <th>Chuỗi 5 lần chạm (Touchpoints)</th>
+                                    <th>Lần cuối liên hệ</th>
+                                    <th>Trạng thái Phản hồi</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Dynamic CRM Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 4: MÁY RÀ SOÁT QC 40s (milleniumts.cloud/form/ra-soat) -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-scanner">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 02 & SOP QT-01</span>
+                        <h2>Máy Rà Soát Quảng Cáo 40 Giây (Công Cụ Săn Khách)</h2>
+                        <p class="dan">Đọc nội dung quảng cáo của thương hiệu thực phẩm cao cấp, tìm câu rủi ro pháp lý, viết lại thành câu an toàn mà vẫn bán được hàng. Tạo quà tặng mở cửa khách hàng trong 40s.</p>
+                    </div>
+
+                    <div class="scanner-container tilt-card">
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px">
+                            <div class="form-group">
+                                <label for="scan-brand-name">Tên thương hiệu mục tiêu</label>
+                                <input type="text" class="form-control" id="scan-brand-name" placeholder="Ví dụ: Yến Sào Hoàng Gia / Trà Shan Tuyết Ancient">
+                            </div>
+                            <div class="form-group">
+                                <label for="scan-brand-url">Website hoặc Fanpage URL</label>
+                                <input type="text" class="form-control" id="scan-brand-url" placeholder="https://facebook.com/yensaohoanggia">
+                            </div>
+                            <div class="form-group">
+                                <label for="scan-category">Ngành hàng thực phẩm cao cấp</label>
+                                <select class="form-control" id="scan-category">
+                                    <option value="yên_sao">Yến sào cao cấp</option>
+                                    <option value="tra_co_thu">Trà cổ thụ / Shan tuyết</option>
+                                    <option value="qua_tet">Hộp quà Tết thượng hạng</option>
+                                    <option value="duoc_lieu">Dược liệu & Sâm quý</option>
+                                    <option value="khac">Thực phẩm cao cấp khác</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scan-content">Nội dung bài đăng / Quảng cáo cần rà soát</label>
+                            <textarea class="form-control" id="scan-content" placeholder="Dán 1-2 bài viết quảng cáo gần nhất của thương hiệu vào đây... (Ví dụ: Yến sào chữa dứt điểm ho, tăng cường hệ miễn dịch 100%, cam kết khỏi bệnh trong 7 ngày...)"></textarea>
+                        </div>
+
+                        <!-- MODE SELECTOR -->
+                        <div class="form-group">
+                            <label>Chế độ rà soát (SOP QT-01 Bước 4)</label>
+                            <div class="mode-radio-group">
+                                <label class="mode-label">
+                                    <input type="radio" name="scan-mode" value="gui_khach" checked>
+                                    <span><strong>Gửi khách (Khuyên dùng):</strong> An toàn, lịch sự, đóng vai món quà tặng mở cửa (Mất 40s)</span>
+                                </label>
+                                <label class="mode-label">
+                                    <input type="radio" name="scan-mode" value="noi_bo">
+                                    <span><strong>Nội bộ:</strong> Bản rà soát chuyên sâu nặng cho sản phẩm công ty hoặc khách đã ký hợp đồng</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="btn-header accent-lam" style="padding:14px; font-size:15px; justify-content:center" onclick="runRiskScanner()">
+                            <i class="ri-flashlight-line"></i> Bấm Submit — Chạy Rà Soát QC (Mất khoảng 40 giây)
+                        </button>
+
+                        <!-- RESULT OUTPUT AREA -->
+                        <div class="result-output-box" id="scanner-result-area" style="display:none">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--vien); padding-bottom:10px">
+                                <span class="nhan" style="color:var(--lam)"><i class="ri-checkbox-circle-fill"></i> Kết quả rà soát QC (Chế độ Gửi Khách)</span>
+                                <button class="btn-header" onclick="copyScannerOutput()"><i class="ri-file-copy-line"></i> Sao chép tin nhắn outreach</button>
+                            </div>
+                            <div id="scanner-output-text">
+                                <!-- Generated by Gemini AI -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 5: QUY TRÌNH SOP & ĐỘI NGŨ AI AGENTS -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-sop">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 04 & 05</span>
+                        <h2>Quy Trình SOP & Đội Ngũ Trợ Lý AI Agents</h2>
+                        <p class="dan">Bảng quy trình chuẩn vận hành từng việc và danh sách các AI Agents đang hoạt động tự động 100%.</p>
+                    </div>
+
+                    <!-- SOP CARDS GRID -->
+                    <div style="display:flex; flex-direction:column; gap:20px">
+                        <!-- SOP 1 -->
+                        <div class="so-do-container tilt-card" style="border-left:5px solid var(--lam)">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                                <span class="chip-tag" style="background:var(--lam-nen); color:var(--lam)">QT-01 · Việc B</span>
+                                <span class="nhan">Săn 1 khách hàng (25 phút / thương hiệu)</span>
+                            </div>
+                            <ol style="padding-left:20px; display:flex; flex-direction:column; gap:8px">
+                                <li>Mở Bảng 50 mục tiêu, chọn thương hiệu từ <strong>8 điểm trở lên</strong>. Dưới 8 điểm bỏ qua.</li>
+                                <li>Kiểm tra website/fanpage chính xác. Nhắn nhầm là mất khách vĩnh viễn!</li>
+                                <li>Copy nội dung bài đăng quảng cáo gần nhất.</li>
+                                <li>Mở <code>milleniumts.cloud/form/ra-soat</code>, chọn chế độ <strong>Gửi khách</strong>, bấm Submit, đợi 40s.</li>
+                                <li>Copy kết quả rà soát, dán vào mẫu tin nhắn outreach. Không sửa nội dung bản rà soát.</li>
+                                <li>Gửi qua Zalo hoặc Messenger của thương hiệu đó.</li>
+                                <li>Ghi lại ngày gửi và phản hồi vào Bảng 50 mục tiêu.</li>
+                            </ol>
+                        </div>
+
+                        <!-- SOP 2 -->
+                        <div class="so-do-container tilt-card" style="border-left:5px solid var(--tim)">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                                <span class="chip-tag">QT-02 · Việc A</span>
+                                <span class="nhan">Khi máy báo có khách tổ chức (Trong vòng 2h)</span>
+                            </div>
+                            <ol style="padding-left:20px; display:flex; flex-direction:column; gap:8px">
+                                <li>Đọc cảnh báo Telegram (tên, tổ chức, nhu cầu, số lượng, mốc thời gian).</li>
+                                <li>Mở Google Sheet nhật ký, đọc lại toàn bộ cuộc trò chuyện trước đó của khách để không hỏi lại.</li>
+                                <li>Nhắn hoặc gọi trực tiếp cho khách, xưng đúng tên mình, nối tiếp câu chuyện đang dở.</li>
+                                <li>Đàm phán giá cả, cam kết và ký hợp đồng.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 6: QUY TẮC TUÂN THỦ & 5 CHỮ VÀNG -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-compliance">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">Sổ tay vận hành · Mục 06 & 07</span>
+                        <h2>Những Điều Tuyệt Đối KHÔNG Làm & 5 Từ Cấm</h2>
+                        <p class="dan">Khách hàng thương hiệu cao cấp mua bằng thể diện thương hiệu. Nói sai một chữ là mất họ vĩnh viễn.</p>
+                    </div>
+
+                    <!-- PROHIBITED ACTIONS -->
+                    <div class="cam-card tilt-card">
+                        <h3><i class="ri-error-warning-line"></i> Khi Gửi Bản Rà Soát QC Cho Thương Hiệu Khác (Việc B)</h3>
+                        <ul class="gach-list">
+                            <li>Không nhắc tới mức phạt bằng tiền, tên cơ quan quản lý, hay số hiệu nghị định.</li>
+                            <li>Không nói hoặc ám chỉ rằng sẽ báo cáo họ. Không đặt hạn chót.</li>
+                            <li>Không sửa kết quả cho nặng thêm để khách sợ.</li>
+                            <li>Nếu máy báo nội dung sạch thì gửi đúng bản đó hoặc bỏ qua. Không đổi sang chế độ Nội bộ.</li>
+                            <li>Không đăng bản rà soát công khai ở bất kỳ đâu. Luôn gửi riêng.</li>
+                        </ul>
+                        <div class="vi-sao-note">
+                            <strong>Lý do:</strong> Ngách này rất nhỏ và ai cũng biết nhau. Một tin nhắn vượt ranh giới sẽ được chụp màn hình và lan khắp ngành trong một ngày. Bản rà soát là món quà, không phải đòn bẩy.
+                        </div>
+                    </div>
+
+                    <!-- 5 PROHIBITED WORDS MATRIX -->
+                    <div class="cuon-table" style="margin-top:16px">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>KHÔNG NÓI (Từ cấm)</th>
+                                    <th>NÓI THAY BẰNG (Văn phong cao cấp)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color:var(--do)">“Chatbot”</strong></td>
+                                    <td><strong style="color:var(--luc)">“Trợ lý lễ tân”</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--do)">“Giúp anh/chị chốt đơn nhiều hơn”</strong></td>
+                                    <td><strong style="color:var(--luc)">“Giúp anh/chị nhận ra khách tổ chức sớm hơn”</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--do)">“Tự động hoá toàn bộ chăm sóc khách hàng”</strong></td>
+                                    <td><strong style="color:var(--luc)">“Lo phần đầu để người của anh/chị dồn sức vào khách lớn”</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--do)">“Chỉ 20 triệu thôi ạ”</strong></td>
+                                    <td><strong style="color:var(--luc)">Nói giá xong thì im lặng.</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--do)">“Bên em cam kết tăng doanh số X%”</strong></td>
+                                    <td><strong style="color:var(--luc)">“Nếu ba con số bên em đo được không đáng tiền, em hoàn lại”</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- INTERACTIVE COMPLIANCE AUDITOR -->
+                    <div class="scanner-container tilt-card" style="margin-top:20px">
+                        <h3><i class="ri-shield-check-line" style="color:var(--luc)"></i> Công Cụ Kiểm Tra Tuân Thủ Văn Bản Outreach</h3>
+                        <div class="form-group">
+                            <label for="compliance-input">Dán nội dung tin nhắn outreach bạn dự định gửi vào đây để soi lỗi cấm:</label>
+                            <textarea class="form-control" id="compliance-input" placeholder="Ví dụ: Xin chào anh, bên em có dịch vụ Chatbot giúp tự động hóa toàn bộ CSKH và giúp anh chị chốt đơn nhiều hơn chỉ 20 triệu thôi ạ..." oninput="checkMessageComplianceLive()"></textarea>
+                        </div>
+                        <button class="btn-header primary-tim" onclick="checkMessageCompliance()">
+                            <i class="ri-search-line"></i> Kiểm Tra Tuân Thủ 5 Chữ Vàng
+                        </button>
+                        <div class="result-output-box" id="compliance-result-box" style="display:none">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================ -->
+                <!-- TAB 7: NHẬT KÝ SYSTEM & MEI COPILOT -->
+                <!-- ============================================================ -->
+                <section class="tab-content-panel" id="panel-logs">
+                    <div class="tieu-de-muc">
+                        <span class="nhan">System Engine · Google Gemini 3.1 Pro</span>
+                        <h2>Nhật Ký Hệ Thống & MEI Executive Copilot</h2>
+                        <p class="dan">Theo dõi log thực thi theo thời gian thực từ milleniumts.cloud và trao đổi trực tiếp với Trợ lý Trí tuệ Điều hành MEI.</p>
+                    </div>
+
+                    <!-- REALTIME TERMINAL -->
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <span><i class="ri-terminal-box-line"></i> REALTIME LOG STREAM — MILLENIUMTS.CLOUD</span>
+                            <span class="nhan" style="color:#7FC9A4">Connected (SSE)</span>
+                        </div>
+                        <div class="terminal-body" id="terminal-log-body">
+                            <!-- Streamed logs -->
+                        </div>
+                    </div>
+
+                    <!-- MEI EXECUTIVE CHATBOT -->
+                    <div class="scanner-container tilt-card" style="margin-top:20px">
+                        <h3><i class="ri-brain-line" style="color:var(--tim)"></i> MEI (Millenium Executive Intelligence) Copilot</h3>
+                        <div id="chat-messages-box" style="min-height:180px; max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:14px; background:var(--nen); border-radius:var(--radius-sm)">
+                            <div class="message-bubble assistant" style="background:var(--tim-nen); color:var(--tim); padding:12px 16px; border-radius:10px; align-self:flex-start">
+                                <strong>MEI Assistant:</strong> Xin chào Ban Giám Đốc! Tôi là Trợ lý Điều hành MEI. Tôi đã thuộc lòng Sổ tay vận hành 1.0. Bạn cần hỗ trợ chiến lược hay rà soát nhiệm vụ nào hôm nay?
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:10px">
+                            <input type="text" class="form-control" id="chat-input" placeholder="Hỏi MEI về chiến lược, SOP, hoặc kiểm tra rủi ro..." onkeydown="if(event.key==='Enter') sendMeiChat()">
+                            <button class="btn-header primary-tim" onclick="sendMeiChat()"><i class="ri-send-plane-line"></i> Gửi</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOOTER -->
+                <footer class="app-footer">
+                    <p>Sổ tay vận hành này thay thế phần giải thích trong các tài liệu kỹ thuật. Bản 1.0 — 05/08/2026</p>
+                    <p>Millenium Viet Nam Thánh Gióng — Phù Đổng Thiên Vương 2.0</p>
+                </footer>
+            </main>
+        </div>
+
+        <!-- DYNAMIC TOAST NOTIFICATION CONTAINER -->
+        <div class="toast-container" id="toast-container"></div>
+
+    </div>
+
+    <!-- ADD/EDIT TARGET MODAL -->
+    <dialog id="modal-target" style="padding:28px; border-radius:var(--radius-lg); border:1px solid var(--vien); background:var(--the-solid); color:var(--muc); width:90%; max-width:500px; margin:auto; box-shadow:var(--shadow-hover)">
+        <form method="dialog" onsubmit="saveTargetForm(event)">
+            <h3 style="margin-bottom:18px">Thêm / Cập Nhật Thương Hiệu Mục Tiêu</h3>
+            <div class="form-group" style="margin-bottom:14px">
+                <label>Tên thương hiệu</label>
+                <input type="text" class="form-control" id="modal-target-name" required>
+            </div>
+            <div class="form-group" style="margin-bottom:14px">
+                <label>Ngành hàng</label>
+                <input type="text" class="form-control" id="modal-target-category" required placeholder="Yến sào / Trà cổ thụ / Quà Tết...">
+            </div>
+            <div class="form-group" style="margin-bottom:14px">
+                <label>Điểm đánh giá (0 - 10)</label>
+                <input type="number" class="form-control" id="modal-target-score" min="1" max="10" step="0.1" value="9.0" required>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px">
+                <button type="button" class="btn-header" onclick="document.getElementById('modal-target').close()">Hủy</button>
+                <button type="submit" class="btn-header primary-tim">Lưu thương hiệu</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="app.js?v=2.0.2"></script>
+</body>
+</html>
