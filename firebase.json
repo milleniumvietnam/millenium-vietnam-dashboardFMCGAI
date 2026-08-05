@@ -4,6 +4,7 @@
     "runtime": "nodejs20"
   },
   "hosting": {
+    "site": "millenium-fmcg-ai",
     "public": "./",
     "ignore": [
       "firebase.json",
