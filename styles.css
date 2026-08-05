@@ -151,18 +151,75 @@ h3 { font-size: 17.5px; font-family: var(--font-sans); font-weight: 650; }
   gap: 14px;
 }
 
+/* LOGO CHÍNH THỨC MILLENIUM VIỆT NAM */
 .brand-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: var(--radius-sm);
-  object-fit: cover;
-  border: 2px solid var(--tim);
-  box-shadow: var(--shadow-tim-glow);
-  transition: transform 0.3s ease;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 4px;
+  border: 1.5px solid var(--dong);
+  box-shadow: 0 4px 12px rgba(140, 109, 31, 0.25);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
 .brand-container:hover .brand-logo-img {
-  transform: scale(1.06) rotate(-2deg);
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 6px 16px rgba(140, 109, 31, 0.4);
+}
+
+.brand-hero-card {
+  background: linear-gradient(135deg, var(--the-solid), var(--nen-2));
+  border-left: 6px solid var(--dong);
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.brand-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-hero-logo {
+  height: 80px;
+  width: auto;
+  max-width: 260px;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--vien);
+  box-shadow: 0 8px 24px rgba(140, 109, 31, 0.15);
+  flex: none;
+}
+
+.footer-logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--vien);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 0 auto 16px auto;
+  display: block;
+}
+
+.chat-header-logo {
+  height: 28px;
+  width: 28px;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 3px;
+  border-radius: 4px;
+  border: 1px solid var(--vien);
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .brand-title {
